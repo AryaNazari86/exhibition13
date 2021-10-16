@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'account.User'
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'article',
     'comment',
     'account',
     'django.contrib.admin',
