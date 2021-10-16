@@ -7,5 +7,5 @@ from article.models import Article
 # Create your views here.
 
 class ArticleList(ListCreateAPIView):
-    serializer_class = serializers.Student
+    serializer_class = serializers.Article
     queryset = Article.objects.all()

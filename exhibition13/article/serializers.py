@@ -3,7 +3,7 @@ from rest_framework import serializers
 from article.models import Article
 
 
-class Student(serializers.ModelSerializer):
+class Article(serializers.ModelSerializer):
     title = models.CharField(max_length=100)
     body = models.TextField()
     image = models.ImageField(upload_to='images/articles/', default='images/default_article', blank=True)
