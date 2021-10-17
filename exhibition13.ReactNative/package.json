@@ -27,9 +27,9 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-reanimated": "^2.2.3",
+    "react-native-screens": "^3.4.0",
     "react-native-web": "~0.13.12",
-    "yet": "^0.1.0",
-    "react-native-screens": "~3.4.0"
+    "yet": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

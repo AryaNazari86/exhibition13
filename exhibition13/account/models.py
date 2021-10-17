@@ -34,7 +34,6 @@ class User(AbstractBaseUser):
     profile_picture = models.ImageField(upload_to='images/accounts/', default='images/default_account.png', blank=True)
     bio = models.TextField(null=True)
     participated_class = models.CharField(max_length=50)
-    grade = models.IntegerField()
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)

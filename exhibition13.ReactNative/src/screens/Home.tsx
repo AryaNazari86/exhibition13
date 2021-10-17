@@ -1,14 +1,14 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import {useData, useTheme, useTranslation} from '../hooks/';
-import {Block, Button, Image, Input, Product, Text} from '../components/';
-
+import { useData, useTheme, useTranslation } from '../hooks/';
+import { Block, Button, Image, Input, Product, Text } from '../components/';
+import { ActivityIndicator } from 'react-native';
 const Home = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [tab, setTab] = useState<number>(0);
-  const {following, trending} = useData();
+  const { following, trending } = useData();
   const [products, setProducts] = useState(following);
-  const {assets, colors, fonts, gradients, sizes} = useTheme();
+  const { assets, colors, fonts, gradients, sizes } = useTheme();
 
   const handleProducts = useCallback(
     (tab: number) => {
@@ -17,6 +17,24 @@ const Home = () => {
     },
     [following, trending, setTab, setProducts],
   );
+
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const getArticles = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/Article/ArtcleList/?format=json');
+      const articles = await response.json();
+      setData(articles.movies);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getArticles();
+  }, []);
 
   return (
     <Block>
@@ -87,11 +105,11 @@ const Home = () => {
         scroll
         paddingHorizontal={sizes.padding}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: sizes.l}}>
+        contentContainerStyle={{ paddingBottom: sizes.l }}>
         <Block row wrap="wrap" justify="space-between" marginTop={sizes.sm}>
-          {products?.map((product) => (
-            <Product {...product} key={`card-${product?.id}`} />
-          ))}
+          {isLoading ? <ActivityIndicator /> : (data?.map((article) => (
+            <Text>A</Text>
+          )))}
         </Block>
       </Block>
     </Block>
