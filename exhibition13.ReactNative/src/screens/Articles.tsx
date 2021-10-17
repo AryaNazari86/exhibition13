@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
 
 import { useData, useTheme } from '../hooks/';
 import { IArticle, ICategory } from '../constants/types';
@@ -62,17 +62,17 @@ const Articles = () => {
           })}
         </Block>
       </Block>
-      {isLoading ? <ActivityIndicator /> : (data?.map((article) => (
-        <Text>A</Text>
-      )))}
-      <FlatList
-        data={articles}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => `${item?.id}`}
-        style={{ paddingHorizontal: sizes.padding }}
-        contentContainerStyle={{ paddingBottom: sizes.l }}
-        renderItem={({ item }) => <Text>A</Text>}
-      />
+      <ScrollView>
+        {isLoading ? <ActivityIndicator /> : (data?.map((article) => (
+          <Article
+            title='Arya'
+            description='asdasfa'
+            image={require('../assets/images/card2.png')}
+            rating={10}
+          ></Article>
+        )))}
+      </ScrollView>
+
 
     </Block>
   );
