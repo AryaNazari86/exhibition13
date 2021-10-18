@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca1ebcdc-a40b-4a16-b5dd-28d03d145df6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../exhibition13.ReactNative/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../exhibition13.ReactNative/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../exhibition13.ReactNative/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../exhibition13.ReactNative/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../exhibition13.ReactNative/src/screens/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../exhibition13.ReactNative/src/screens/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../exhibition13.ReactNative/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../exhibition13.ReactNative/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../exhibition13.ReactNative/src/screens/Articles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../exhibition13.ReactNative/src/screens/Articles.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/article/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/article/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/article/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comment/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/article/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/article/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/article/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/article/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/article/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/article/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exhibition13/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/exhibition13/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +18,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1zZfhVFCreSnMyTbWXF0iTeZSpK" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />

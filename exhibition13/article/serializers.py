@@ -1,16 +1,20 @@
 from django.db import models
 from rest_framework import serializers
 from article.models import Article
+from account.models import User
+
+
+class User(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'profile_picture', 'first_name', 'last_name')
+        read_only_fields = []
 
 
 class Article(serializers.ModelSerializer):
-    title = models.CharField(max_length=100)
-    body = models.TextField()
-    image = models.ImageField(upload_to='images/articles/', default='images/default_article', blank=True)
-    video = models.FileField(upload_to='videos/articles', blank=True)
-    user = models.ForeignKey('account.User', on_delete=models.CASCADE)
+    user = User(read_only=True)
 
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = ('title', 'body', 'image', 'video', 'user')
         read_only_fields = []

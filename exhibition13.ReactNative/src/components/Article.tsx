@@ -107,7 +107,7 @@ const Article = ({
           radius={sizes.cardRadius}
           source={{ uri: image }}>
           <Block color={colors.overlay} padding={sizes.padding}>
-            <Text h4 white marginBottom={sizes.sm}>
+            <Text h4 black={true} marginBottom={sizes.sm}>
               {title}
             </Text>
             <Text p white>

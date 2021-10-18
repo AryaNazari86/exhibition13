@@ -22,7 +22,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const getArticles = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/Article/ArtcleList/?format=json');
+      const response = await fetch('http://192.168.0.147:8000/Article/ArticleList/?format=json');
       const articles = await response.json();
       setData(articles.movies);
     } catch (error) {
