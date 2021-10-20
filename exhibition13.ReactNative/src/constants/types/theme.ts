@@ -10,22 +10,22 @@ import {
 // Spacing types
 export interface ISpacing
   extends Pick<
-    FlexStyle,
-    | 'margin'
-    | 'marginVertical'
-    | 'marginHorizontal'
-    | 'marginLeft'
-    | 'marginRight'
-    | 'marginTop'
-    | 'marginBottom'
-    | 'padding'
-    | 'paddingVertical'
-    | 'paddingHorizontal'
-    | 'paddingLeft'
-    | 'paddingRight'
-    | 'paddingTop'
-    | 'paddingBottom'
-  > {}
+  FlexStyle,
+  | 'margin'
+  | 'marginVertical'
+  | 'marginHorizontal'
+  | 'marginLeft'
+  | 'marginRight'
+  | 'marginTop'
+  | 'marginBottom'
+  | 'padding'
+  | 'paddingVertical'
+  | 'paddingHorizontal'
+  | 'paddingLeft'
+  | 'paddingRight'
+  | 'paddingTop'
+  | 'paddingBottom'
+  > { }
 
 export type TWeight =
   /** fontWeight: 400 */
@@ -207,6 +207,7 @@ export interface ThemeWeights {
   black?: TextStyle['fontWeight'];
 }
 export interface ThemeIcons {
+  sampad: ImageSourcePropType;
   apple: ImageSourcePropType;
   google: ImageSourcePropType;
   facebook: ImageSourcePropType;
@@ -254,6 +255,9 @@ export interface ThemeAssets {
   logo: ImageSourcePropType;
   header: ImageSourcePropType;
   background: ImageSourcePropType;
+
+  latest: ImageSourcePropType;
+  important: ImageSourcePropType;
 
   card1: ImageSourcePropType;
   card2: ImageSourcePropType;

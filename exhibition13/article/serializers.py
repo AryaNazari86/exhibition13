@@ -1,6 +1,6 @@
 from django.db import models
 from rest_framework import serializers
-from article.models import Article
+from article.models import Article, HomeArticles
 from account.models import User
 
 
@@ -16,5 +16,14 @@ class Article(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('title', 'body', 'image', 'video', 'user')
+        fields = ('title', 'body', 'image', 'user')
+        read_only_fields = []
+
+
+class HomeArticles(serializers.ModelSerializer):
+    article = Article()
+
+    class Meta:
+        model = HomeArticles
+        fields = ('is_important', 'article')
         read_only_fields = []

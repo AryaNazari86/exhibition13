@@ -12,6 +12,7 @@ import {
 import Screens from './Screens';
 import { Block, Text, Switch, Button, Image } from '../components';
 import { useData, useTheme, useTranslation } from '../hooks';
+import { ICONS } from '../constants/theme';
 
 const Drawer = createDrawerNavigator();
 
@@ -105,15 +106,15 @@ const DrawerContent = (
             width={33}
             height={33}
             color={colors.text}
-            source={assets.logo}
+            source={ICONS.sampad}
             marginRight={sizes.sm}
           />
           <Block>
-            <Text size={12} semibold>
-              {t('app.name')}
+            <Text size={14} semibold>
+              Exhibition 13
             </Text>
             <Text size={12} semibold>
-              {t('app.native')}
+              Allameh Helli 3
             </Text>
           </Block>
         </Block>

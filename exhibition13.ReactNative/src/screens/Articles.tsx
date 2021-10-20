@@ -13,7 +13,7 @@ const Articles = () => {
   const [data, setData] = useState([]);
   const getArticles = async () => {
     try {
-      const response = await fetch('http://192.168.0.147:8000/Article/ArticleList/?format=json');
+      const response = await fetch('http://192.168.0.147:8000/Article/ArticlesList/?format=json');
       const articles = await response.json();
       setData(articles);
     } catch (error) {
@@ -43,10 +43,7 @@ const Articles = () => {
                 <Text h4 white marginBottom={sizes.sm}>
                   {article.title}
                 </Text>
-                <Text p white>
-                  Rather than worrying about switching offices every couple years,
-                  you can instead stay in the same location.
-                </Text>
+
                 {/* user details */}
                 <Block row marginLeft={sizes.xs} marginTop={sizes.xxl}>
                   <Image

@@ -1,4 +1,4 @@
-import {Dimensions, Platform} from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import {
   ICommonTheme,
   ThemeAssets,
@@ -8,7 +8,7 @@ import {
   ThemeWeights,
 } from './types';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 // Naming source: https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
 export const WEIGHTS: ThemeWeights = {
@@ -32,6 +32,7 @@ export const WEIGHTS: ThemeWeights = {
 };
 
 export const ICONS: ThemeIcons = {
+  sampad: require('../assets/icons/Sampad.png'),
   apple: require('../assets/icons/apple.png'),
   google: require('../assets/icons/google.png'),
   facebook: require('../assets/icons/facebook.png'),
@@ -84,6 +85,8 @@ export const ASSETS: ThemeAssets = {
   ios: require('../assets/images/ios.png'),
   android: require('../assets/images/android.png'),
 
+  latest: require('../assets/images/LatestNews.png'),
+  important: require('../assets/images/ImportantNews.png'),
   // cards
   card1: require('../assets/images/card1.png'),
   card2: require('../assets/images/card2.png'),
@@ -145,9 +148,9 @@ export const LINE_HEIGHTS: ThemeLineHeights = {
 
 export const THEME: ICommonTheme = {
   icons: ICONS,
-  assets: {...ICONS, ...ASSETS},
+  assets: { ...ICONS, ...ASSETS },
   fonts: FONTS,
   weights: WEIGHTS,
   lines: LINE_HEIGHTS,
-  sizes: {width, height},
+  sizes: { width, height },
 };
