@@ -30,7 +30,6 @@ ALLOWED_HOSTS = [
     '192.168.0.147'
 ]
 
-
 # Application definition
 AUTH_USER_MODEL = 'account.User'
 
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -62,7 +62,9 @@ ROOT_URLCONF = 'exhibition13.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'templates/'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

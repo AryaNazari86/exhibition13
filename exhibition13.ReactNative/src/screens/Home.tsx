@@ -7,6 +7,7 @@ const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const [important, setImportant] = useState([]);
   const [latest, setLatest] = useState([]);
+  const [articles, setArticles] = useState(important);
   const getArticles = async () => {
     try {
       const response = await fetch('http://192.168.0.147:8000/Article/HomeArticlesList/?format=json');
@@ -19,6 +20,7 @@ const Home = () => {
       const response1 = await fetch('http://192.168.0.147:8000/Article/LatestArticlesList/?format=json');
       const data1 = await response1.json();
       setLatest(data1);
+      setArticles(important);
     } catch (error) {
       console.error(error);
     } finally {
@@ -32,13 +34,14 @@ const Home = () => {
   const { t } = useTranslation();
   const [tab, setTab] = useState<number>(0);
   const { following, trending } = useData();
-  const [articles, setArticles] = useState([latest]);
-  const { assets, colors, fonts, gradients, sizes } = useTheme();
 
+  const { assets, colors, fonts, gradients, sizes } = useTheme();
+  const [articleImage, setArticleImage] = useState(assets.important);
   const handleProducts = useCallback(
     (tab: number) => {
       setTab(tab);
       setArticles([important, latest][tab]);
+      setArticleImage([assets.important, assets.latest][tab]);
     },
     [following, trending, setTab, setArticles],
   );
@@ -74,7 +77,7 @@ const Home = () => {
               <Image source={assets.extras} color={colors.white} radius={0} />
             </Block>
             <Text p font={fonts?.[tab === 0 ? 'medium' : 'normal']}>
-              {t('home.following')}
+              News
             </Text>
           </Block>
         </Button>
@@ -103,24 +106,24 @@ const Home = () => {
               />
             </Block>
             <Text p font={fonts?.[tab === 1 ? 'medium' : 'normal']}>
-              {t('home.trending')}
+              Latest
             </Text>
           </Block>
         </Button>
       </Block>
 
-      {/* products list */}
+      {/* article list */}
       <Block
         scroll
         paddingHorizontal={sizes.padding}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: sizes.l }}>
-        <Block row wrap="wrap" justify="space-between" marginTop={sizes.sm}>
-          {isLoading ? <ActivityIndicator /> : (articles?.map((article) => (
+        <Block justify="space-between" marginTop={sizes.sm}>
+          {isLoading ? <ActivityIndicator /> : (articles.map((article) => (
             <Block card marginTop={sizes.sm}>
               <Image
                 resizeMode="cover"
-                source={assets.important}
+                source={articleImage}
                 style={{ width: '100%', height: 150, }}
               />
               <Text

@@ -88,6 +88,7 @@ const DrawerContent = (
     { name: t('screens.home'), to: 'Home', icon: assets.home },
     { name: t('screens.components'), to: 'Components', icon: assets.components },
     { name: t('screens.articles'), to: 'Articles', icon: assets.document },
+    { name: 'Comment', to: 'Comment', icon: assets.tesla },
     { name: t('screens.profile'), to: 'Profile', icon: assets.profile },
     { name: t('screens.register'), to: 'Register', icon: assets.register },
   ];
