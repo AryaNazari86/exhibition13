@@ -5,9 +5,9 @@ import AppLoading from 'expo-app-loading';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 import Menu from './Menu';
-import { useData, ThemeProvider, TranslationProvider } from '../hooks';
+import { useData, ThemeProvider, TranslationProvider, DataProvider } from '../hooks';
 
-export default () => {
+const AppNavigation = () => {
   const { isDark, theme, setTheme } = useData();
 
   /* set the status bar based on isDark constant */
@@ -47,14 +47,18 @@ export default () => {
   };
 
   return (
-
-    <TranslationProvider>
-      <ThemeProvider theme={theme} setTheme={setTheme}>
-        <NavigationContainer theme={navigationTheme}>
-          <Menu />
-        </NavigationContainer>
-      </ThemeProvider>
-    </TranslationProvider>
-
+    <DataProvider>
+      <NavigationContainer>
+        <TranslationProvider>
+          <ThemeProvider theme={theme} setTheme={setTheme}>
+            <NavigationContainer theme={navigationTheme}>
+              <Menu />
+            </NavigationContainer>
+          </ThemeProvider>
+        </TranslationProvider>
+      </NavigationContainer>
+    </DataProvider>
   );
 };
+
+export default AppNavigation;

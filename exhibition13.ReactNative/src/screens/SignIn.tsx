@@ -21,7 +21,7 @@ interface IRegistrationValidation {
   agreed: boolean;
 }
 
-const SignIn = () => {
+function SignIn() {
   const { isDark } = useData();
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -253,4 +253,4 @@ const SignIn = () => {
   );
 };
 
-export default Register;
+export default SignIn;
