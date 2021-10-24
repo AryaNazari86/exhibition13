@@ -47,17 +47,13 @@ const AppNavigation = () => {
   };
 
   return (
-    <DataProvider>
-      <NavigationContainer>
-        <TranslationProvider>
-          <ThemeProvider theme={theme} setTheme={setTheme}>
-            <NavigationContainer theme={navigationTheme}>
-              <Menu />
-            </NavigationContainer>
-          </ThemeProvider>
-        </TranslationProvider>
-      </NavigationContainer>
-    </DataProvider>
+    <TranslationProvider>
+      <ThemeProvider theme={theme} setTheme={setTheme}>
+        <NavigationContainer theme={navigationTheme}>
+          <Menu />
+        </NavigationContainer>
+      </ThemeProvider>
+    </TranslationProvider>
   );
 };
 
