@@ -4,7 +4,7 @@ import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import { useData, useTheme } from '../hooks/';
 import { IArticle, ICategory } from '../constants/types';
 import { Block, Button, Image, Text } from '../components/';
-
+import { getArticles } from '../../services/articleServices';
 const Articles = () => {
   const { assets, colors, gradients, sizes } = useTheme();
   const [selected, setSelected] = useState<ICategory>();
@@ -13,8 +13,7 @@ const Articles = () => {
   const [data, setData] = useState([]);
   const getArticles = async () => {
     try {
-      const response = await fetch('http://192.168.0.147:8000/Article/ArticlesList/?format=json');
-      const articles = await response.json();
+      const articles = await getArticles();
       setData(articles);
     } catch (error) {
       console.error(error);

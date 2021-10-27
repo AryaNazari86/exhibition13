@@ -26,6 +26,12 @@ SECRET_KEY = 'eb=086=6pym6o8qmh-nn_)4soqva%8ah9onud#v&mim1k0x!=m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
 ALLOWED_HOSTS = [
     '192.168.0.147'
 ]

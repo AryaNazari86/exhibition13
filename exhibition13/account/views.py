@@ -1,14 +1,14 @@
 from django.shortcuts import render, HttpResponse
-from django.contrib.auth.models import User
+from account.models import User
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
 from account import serializers
 from rest_framework.response import Response
-
+from django.contrib.auth.views import LoginView, LogoutView
 # Create your views here.
 
 class SignUp(ListCreateAPIView):
-    queryset = User
+    queryset = User.objects.all()
     serializer_class = serializers.User
 
 from django.conf import settings
@@ -20,11 +20,14 @@ from rest_framework.authtoken.models import Token
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
-
+import json
 class Profile(APIView):
-    def get(self, request):
+    def post(self, request):
+        token = json.loads(request.body)['token']
+        user = User.objects.get(auth_token=token)
         data = {
-            'name': f'{request.user.first_name} {request.user.last_name}',
-            'username': request.user.username,
+            'username': user.username,
+            'name': str(user.first_name) + ' ' + str(user.last_name),
+            'avatar': user.profile_picture.url
         }
         return Response(data, status=201)

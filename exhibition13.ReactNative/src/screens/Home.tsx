@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import { useData, useTheme, useTranslation } from '../hooks/';
 import { Block, Button, Image, Input, Product, Text } from '../components/';
 import { ActivityIndicator } from 'react-native';
+import { getHomeArticles, getLatestArticles } from '../../services/articleServices';
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const [important, setImportant] = useState([]);
@@ -10,16 +11,10 @@ const Home = () => {
   const [articles, setArticles] = useState(important);
   const getArticles = async () => {
     try {
-      const response = await fetch('http://192.168.0.147:8000/Article/HomeArticlesList/?format=json');
-      const data = await response.json();
-      var importantArticles = [];
-      for (let i = 0; i < data.length; i++) {
-        importantArticles.push(data[i].article)
-      }
-      setImportant(importantArticles);
-      const response1 = await fetch('http://192.168.0.147:8000/Article/LatestArticlesList/?format=json');
-      const data1 = await response1.json();
-      setLatest(data1);
+      const data = await getHomeArticles();
+      setImportant(data);
+      const data2 = await getLatestArticles();
+      setLatest(data2);
       setArticles(important);
     } catch (error) {
       console.error(error);

@@ -5,18 +5,16 @@ import { useNavigation } from '@react-navigation/core';
 import { useData, useTheme, useTranslation } from '../hooks/';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
-  name: string;
-  email: string;
+  username: string;
   password: string;
   agreed: boolean;
 }
 interface IRegistrationValidation {
-  name: boolean;
-  email: boolean;
+  username: boolean;
   password: boolean;
   agreed: boolean;
 }
@@ -26,14 +24,12 @@ function SignIn() {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    name: false,
-    email: false,
+    username: false,
     password: false,
     agreed: false,
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    name: '',
-    email: '',
+    username: '',
     password: '',
     agreed: false,
   });
@@ -46,23 +42,31 @@ function SignIn() {
     [setRegistration],
   );
 
-  const handleSignUp = useCallback(() => {
-    if (!Object.values(isValid).includes(false)) {
-      /** send/save registratin data */
-      console.log('handleSignUp', registration);
+  const SignIn = async (username, password) => {
+    var data = new FormData();
+    data.append('username', 'AryaNazari86');
+    data.append('password', "Arya1386");
+    try {
+      const response = await fetch('http://192.168.0.147:8000/Account/api-token-auth/',
+        {
+          method: 'post',
+          body: data,
+        }
+      );
+      const token = await response.json();
+      console.log(token);
+      async () => {
+        await AsyncStorage.setItem(
+          'token',
+          token.token
+        );
+      };
+      navigation.navigate('Home');
+
+    } catch (error) {
+      console.error(error);
     }
-  }, [isValid, registration]);
-
-  useEffect(() => {
-    setIsValid((state) => ({
-      ...state,
-      name: regex.name.test(registration.name),
-      email: regex.email.test(registration.email),
-      password: regex.password.test(registration.password),
-      agreed: registration.agreed,
-    }));
-  }, [registration, setIsValid]);
-
+  }
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
@@ -74,25 +78,8 @@ function SignIn() {
             radius={sizes.cardRadius}
             source={assets.background}
             height={sizes.height * 0.3}>
-            <Button
-              row
-              flex={0}
-              justify="flex-start"
-              onPress={() => navigation.goBack()}>
-              <Image
-                radius={0}
-                width={10}
-                height={18}
-                color={colors.white}
-                source={assets.arrow}
-                transform={[{ rotate: '180deg' }]}
-              />
-              <Text p white marginLeft={sizes.s}>
-                {t('common.goBack')}
-              </Text>
-            </Button>
 
-            <Text h4 center white marginBottom={sizes.md}>
+            <Text h4 center white marginBottom={sizes.md} marginTop={50}>
               {t('register.title')}
             </Text>
           </Image>
@@ -117,32 +104,15 @@ function SignIn() {
               justify="space-evenly"
               tint={colors.blurTint}
               paddingVertical={sizes.sm}>
-              <Text p semibold center>
-                {t('register.subtitle')}
-              </Text>
-              {/* social buttons */}
               <Block row center justify="space-evenly" marginVertical={sizes.m}>
-                <Button outlined gray shadow={!isAndroid}>
+                <Button outlined gray shadow={!isAndroid} onPress={() => { navigation.navigate('Register') }}>
+                  <Text bold transform="uppercase">
+                    {t('common.signup')}
+                  </Text>
                   <Image
-                    source={assets.facebook}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.apple}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.google}
-                    height={sizes.m}
-                    width={sizes.m}
+                    source={assets.sampad}
+                    height={100}
+                    width={100}
                     color={isDark ? colors.icon : undefined}
                   />
                 </Button>
@@ -179,68 +149,30 @@ function SignIn() {
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t('common.name')}
-                  placeholder={t('common.namePlaceholder')}
-                  success={Boolean(registration.name && isValid.name)}
-                  danger={Boolean(registration.name && !isValid.name)}
+                  label="Username"
+                  placeholder="Enter your Username"
+                  success={Boolean(registration.username && isValid.username)}
+                  danger={Boolean(registration.username && !isValid.username)}
                   onChangeText={(value) => handleChange({ name: value })}
-                />
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  label={t('common.email')}
-                  keyboardType="email-address"
-                  placeholder={t('common.emailPlaceholder')}
-                  success={Boolean(registration.email && isValid.email)}
-                  danger={Boolean(registration.email && !isValid.email)}
-                  onChangeText={(value) => handleChange({ email: value })}
                 />
                 <Input
                   secureTextEntry
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t('common.password')}
-                  placeholder={t('common.passwordPlaceholder')}
+                  label="Password"
+                  placeholder="Enter your Password"
                   onChangeText={(value) => handleChange({ password: value })}
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
                 />
               </Block>
-              {/* checkbox terms */}
-              <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
-                <Checkbox
-                  marginRight={sizes.sm}
-                  checked={registration?.agreed}
-                  onPress={(value) => handleChange({ agreed: value })}
-                />
-                <Text paddingRight={sizes.s}>
-                  {t('common.agree')}
-                  <Text
-                    semibold
-                    onPress={() => {
-                      Linking.openURL('https://www.creative-tim.com/terms');
-                    }}>
-                    {t('common.terms')}
-                  </Text>
-                </Text>
-              </Block>
-              <Button
-                onPress={handleSignUp}
-                marginVertical={sizes.s}
-                marginHorizontal={sizes.sm}
-                gradient={gradients.primary}
-                disabled={Object.values(isValid).includes(false)}>
-                <Text bold white transform="uppercase">
-                  {t('common.signup')}
-                </Text>
-              </Button>
               <Button
                 primary
                 outlined
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                onPress={() => navigation.navigate('Pro')}>
+                onPress={() => SignIn(registration.username, registration.password)}>
                 <Text bold primary transform="uppercase">
                   {t('common.signin')}
                 </Text>

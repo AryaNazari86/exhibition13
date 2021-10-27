@@ -13,14 +13,15 @@ export default () => {
   return (
     <Stack.Navigator screenOptions={screenOptions.stack}>
 
-      <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{ headerShown: false }}
-      />
+
       <Stack.Screen
         name="SignIn"
         component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
         options={{ headerShown: false }}
       />
       <Stack.Screen

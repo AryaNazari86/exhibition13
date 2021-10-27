@@ -1,18 +1,17 @@
-import React, {useCallback} from 'react';
-import {Platform, Linking} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/core';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Platform, Linking } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
 
-import {Block, Button, Image, Text} from '../components/';
-import {useData, useTheme, useTranslation} from '../hooks/';
-
+import { Block, Button, Image, Text } from '../components/';
+import { useData, useTheme, useTranslation } from '../hooks/';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const isAndroid = Platform.OS === 'android';
 
 const Profile = () => {
-  const {user} = useData();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const navigation = useNavigation();
-  const {assets, colors, sizes} = useTheme();
+  const { assets, colors, sizes } = useTheme();
 
   const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3;
   const IMAGE_VERTICAL_SIZE =
@@ -21,6 +20,30 @@ const Profile = () => {
   const IMAGE_VERTICAL_MARGIN =
     (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2;
 
+
+  const [user, setUser] = useState({
+    'name': 'Hi',
+    'username': 'HIii'
+  });
+  const getProfileData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      console.log(value);
+      if (value !== null) {
+        const response = await fetch('http://192.168.0.147:8000/Account/Profile/', {
+          method: 'post',
+          body: JSON.stringify({
+            'token': value
+          })
+        });
+        const data = await response.json();
+        setUser(data);
+      }
+    } catch (error) {
+      console.log("ARYA");
+
+    }
+  };
   const handleSocialLink = useCallback(
     (type: 'twitter' | 'dribbble') => {
       const url =
@@ -37,13 +60,19 @@ const Profile = () => {
     [user],
   );
 
+  getProfileData();
+
+  useEffect(() => {
+    getProfileData();
+  }, []);
+
   return (
     <Block safe marginTop={sizes.md}>
       <Block
         scroll
         paddingHorizontal={sizes.s}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: sizes.padding}}>
+        contentContainerStyle={{ paddingBottom: sizes.padding }}>
         <Block flex={0}>
           <Image
             background
@@ -63,7 +92,7 @@ const Profile = () => {
                 height={18}
                 color={colors.white}
                 source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
+                transform={[{ rotate: '180deg' }]}
               />
               <Text p white marginLeft={sizes.s}>
                 {t('profile.title')}
@@ -74,10 +103,10 @@ const Profile = () => {
                 width={64}
                 height={64}
                 marginBottom={sizes.sm}
-                source={{uri: user?.avatar}}
+                source={{ uri: user?.avatar }}
               />
               <Text h5 center white>
-                {user?.name}
+                {user?.username}
               </Text>
               <Text p center white>
                 {user?.department}
