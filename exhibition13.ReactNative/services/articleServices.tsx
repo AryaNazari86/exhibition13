@@ -13,8 +13,9 @@ export async function getLatestArticles() {
     const data = await response.json();
     return data
 }
-export async function getArticles() {
+
+export async function getAllArticles() {
     const response = await fetch('http://192.168.0.147:8000/Article/ArticlesList/?format=json');
-    const articles = await response.json();
-    return articles
+    const data = await response.json();
+    return data
 }

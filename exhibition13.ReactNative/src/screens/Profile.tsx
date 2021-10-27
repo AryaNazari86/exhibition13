@@ -28,7 +28,6 @@ const Profile = () => {
   const getProfileData = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
-      console.log(value);
       if (value !== null) {
         const response = await fetch('http://192.168.0.147:8000/Account/Profile/', {
           method: 'post',
@@ -103,13 +102,13 @@ const Profile = () => {
                 width={64}
                 height={64}
                 marginBottom={sizes.sm}
-                source={{ uri: user?.avatar }}
+                source={{ uri: 'http://192.168.0.147:8000' + user.avatar }}
               />
               <Text h5 center white>
                 {user?.username}
               </Text>
               <Text p center white>
-                {user?.department}
+                {user?.name}
               </Text>
               <Block row marginVertical={sizes.m}>
                 <Button
@@ -199,7 +198,7 @@ const Profile = () => {
               {t('profile.aboutMe')}
             </Text>
             <Text p lineHeight={26}>
-              {user?.about}
+              {user?.bio}
             </Text>
           </Block>
 

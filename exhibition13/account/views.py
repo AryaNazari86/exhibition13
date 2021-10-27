@@ -28,6 +28,7 @@ class Profile(APIView):
         data = {
             'username': user.username,
             'name': str(user.first_name) + ' ' + str(user.last_name),
-            'avatar': user.profile_picture.url
+            'avatar': user.profile_picture.url,
+            'bio': user.bio
         }
         return Response(data, status=201)

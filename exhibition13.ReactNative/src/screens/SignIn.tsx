@@ -53,20 +53,27 @@ function SignIn() {
           body: data,
         }
       );
-      const token = await response.json();
-      console.log(token);
-      async () => {
+      await response.json().then(async (token) => {
         await AsyncStorage.setItem(
           'token',
           token.token
         );
-      };
-      navigation.navigate('Home');
+        navigation.navigate('Home');
 
+      })
     } catch (error) {
       console.error(error);
     }
   }
+
+  useEffect(() => {
+    const value = AsyncStorage.getItem('token');
+    if (value != null) {
+      navigation.navigate('Home');
+    }
+  }, []);
+
+
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
@@ -183,6 +190,8 @@ function SignIn() {
       </Block>
     </Block>
   );
+
+
 };
 
 export default SignIn;
