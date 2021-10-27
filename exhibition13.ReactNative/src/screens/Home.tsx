@@ -8,23 +8,24 @@ const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const [important, setImportant] = useState([]);
   const [latest, setLatest] = useState([]);
-  const [articles, setArticles] = useState(important);
+
   const getArticles = async () => {
     try {
       const data = await getHomeArticles();
       setImportant(data);
       const data2 = await getLatestArticles();
       setLatest(data2);
-      setArticles(important);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
   }
-
+  const [articles, setArticles] = useState(important);
   useEffect(() => {
     getArticles();
+    setArticles(important);
+    handleTabs(0);
   }, []);
   const { t } = useTranslation();
   const [tab, setTab] = useState<number>(0);
@@ -32,7 +33,7 @@ const Home = () => {
 
   const { assets, colors, fonts, gradients, sizes } = useTheme();
   const [articleImage, setArticleImage] = useState(assets.important);
-  const handleProducts = useCallback(
+  const handleTabs = useCallback(
     (tab: number) => {
       setTab(tab);
       setArticles([important, latest][tab]);
@@ -45,10 +46,6 @@ const Home = () => {
 
   return (
     <Block>
-      {/* search input */}
-      <Block color={colors.card} flex={0} padding={sizes.padding}>
-        <Input search placeholder={t('common.search')} />
-      </Block>
 
       {/* toggle products list */}
       <Block
@@ -58,7 +55,7 @@ const Home = () => {
         justify="center"
         color={colors.card}
         paddingBottom={sizes.sm}>
-        <Button onPress={() => handleProducts(0)}>
+        <Button onPress={() => handleTabs(0)}>
           <Block row align="center">
             <Block
               flex={0}
@@ -83,7 +80,7 @@ const Home = () => {
           marginHorizontal={sizes.sm}
           height={sizes.socialIconSize}
         />
-        <Button onPress={() => handleProducts(1)}>
+        <Button onPress={() => handleTabs(1)}>
           <Block row align="center">
             <Block
               flex={0}
@@ -114,7 +111,7 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: sizes.l }}>
         <Block justify="space-between" marginTop={sizes.sm}>
-          {isLoading ? <ActivityIndicator /> : (articles.map((article) => (
+          {articles.map((article) => (
             <Block card marginTop={sizes.sm}>
               <Image
                 resizeMode="cover"
@@ -139,7 +136,7 @@ const Home = () => {
               {/* user details */}
               <Block row marginLeft={sizes.xs} marginBottom={sizes.xs}>
                 <Image
-                  source={assets.avatar2}
+                  source={{ uri: article.user.profile_picture }}
                   style={{ width: sizes.xl, height: sizes.xl, borderRadius: sizes.s }}
                 />
                 <Block marginLeft={sizes.s}>
@@ -152,7 +149,7 @@ const Home = () => {
                 </Block>
               </Block>
             </Block>
-          )))}
+          ))}
         </Block>
       </Block>
     </Block>

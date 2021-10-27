@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
-import { useData, useTheme } from '../hooks/';
+
+import { useData, useTheme, useTranslation } from '../hooks/';
 import { IArticle, ICategory } from '../constants/types';
-import { Block, Button, Image, Text } from '../components/';
+import { Block, Button, Image, Text, Input } from '../components/';
 import { getAllArticles, getLatestArticles } from '../../services/articleServices';
 import { NavigationContainer } from '@react-navigation/native';
 const Articles = () => {
   const { assets, colors, gradients, sizes } = useTheme();
   const [selected, setSelected] = useState<ICategory>();
   const navigation = useNavigation();
-
+  const { t } = useTranslation();
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const getArticles = async () => {
@@ -33,6 +34,11 @@ const Articles = () => {
     <Block>
 
       <ScrollView>
+
+        {/* search input */}
+        <Block color={colors.card} flex={0} padding={sizes.padding}>
+          <Input search placeholder={t('common.search')} />
+        </Block>
         {isLoading ? <ActivityIndicator /> : (data?.map((article) => (
           <TouchableOpacity onPress={() => navigation.navigate('ArticlePreview', { body: article.body, video: article.video, image: article.image, title: article.title })}>
             < Block card padding={0} marginTop={sizes.sm} marginHorizontal={20} >

@@ -40,47 +40,8 @@ export default () => {
     ),
     headerRight: () => (
       <Block row flex={0} align="center" marginRight={sizes.padding}>
-        <TouchableOpacity
-          style={{ marginRight: sizes.sm }}
-          onPress={() =>
-            navigation.navigate('Screens', {
-              screen: 'Pro',
-            })
-          }>
-          <Image source={icons.bell} radius={0} color={colors.icon} />
-          <Block
-            flex={0}
-            right={0}
-            width={sizes.s}
-            height={sizes.s}
-            radius={sizes.xs}
-            position="absolute"
-            gradient={gradients?.primary}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Screens', {
-              screen: 'Pro',
-            })
-          }>
-          <Image source={icons.basket} radius={0} color={colors.icon} />
-          <Block
-            flex={0}
-            padding={0}
-            justify="center"
-            position="absolute"
-            top={-sizes.s}
-            right={-sizes.s}
-            width={sizes.sm}
-            height={sizes.sm}
-            radius={sizes.sm / 2}
-            gradient={gradients?.primary}>
-            <Text white center bold size={10} lineHeight={10} paddingTop={3}>
-              3
-            </Text>
-          </Block>
-        </TouchableOpacity>
+
+
       </Block>
     ),
   } as StackHeaderOptions;
