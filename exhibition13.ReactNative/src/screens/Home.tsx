@@ -144,7 +144,7 @@ const Home = () => {
                     {article.user.username}
                   </Text>
                   <Text p gray>
-                    Posted on 28 February
+                    {article.user.first_name + ' ' + article.user.last_name}
                   </Text>
                 </Block>
               </Block>

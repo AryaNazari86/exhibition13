@@ -15,15 +15,31 @@ const Articles = () => {
   const { t } = useTranslation();
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
   const getArticles = async () => {
     try {
       const data2 = await getAllArticles();
       setData(data2);
+      setSearchResult(data2);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
+  }
+
+
+  const search = (value) => {
+
+    var result = [];
+    for (let i = 0; i < data.length; i++) {
+      console.log(data[i]);
+      if (data[i].title.includes(value)) {
+        result.push(data[i]);
+      }
+
+    }
+    setSearchResult(result);
   }
 
   useEffect(() => {
@@ -37,9 +53,9 @@ const Articles = () => {
 
         {/* search input */}
         <Block color={colors.card} flex={0} padding={sizes.padding}>
-          <Input search placeholder={t('common.search')} />
+          <Input search onChangeText={(value) => { search(value) }} placeholder={t('common.search')} />
         </Block>
-        {isLoading ? <ActivityIndicator /> : (data?.map((article) => (
+        {isLoading ? <ActivityIndicator /> : (searchResult.map((article) => (
           <TouchableOpacity onPress={() => navigation.navigate('ArticlePreview', { body: article.body, video: article.video, image: article.image, title: article.title })}>
             < Block card padding={0} marginTop={sizes.sm} marginHorizontal={20} >
               <Image
@@ -84,6 +100,7 @@ const Articles = () => {
 
     </Block >
   );
+
 };
 
 export default Articles;
