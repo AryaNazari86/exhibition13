@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Linking, Platform } from 'react-native';
+import { InteractionManager, Linking, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 import { useData, useTheme, useTranslation } from '../hooks/';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Value } from 'react-native-reanimated';
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
@@ -13,21 +14,12 @@ interface IRegistration {
   password: string;
   agreed: boolean;
 }
-interface IRegistrationValidation {
-  username: boolean;
-  password: boolean;
-  agreed: boolean;
-}
 
 function SignIn() {
   const { isDark } = useData();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    username: false,
-    password: false,
-    agreed: false,
-  });
+
   const [registration, setRegistration] = useState<IRegistration>({
     username: '',
     password: '',
@@ -43,35 +35,48 @@ function SignIn() {
   );
 
   const SignIn = async (username, password) => {
-    var data = new FormData();
-    data.append('username', 'AryaNazari86');
-    data.append('password', "Arya1386");
-    try {
-      const response = await fetch('http://192.168.0.147:8000/Account/api-token-auth/',
-        {
-          method: 'post',
-          body: data,
-        }
-      );
-      await response.json().then(async (token) => {
-        await AsyncStorage.setItem(
-          'token',
-          token.token
+    if (username.length >= 5 || password.length >= 8) {
+      var data = new FormData();
+      data.append('username', 'AryaNazari86');
+      data.append('password', "Arya1386");
+      try {
+        const response = await fetch('http://192.168.0.147:8000/Account/api-token-auth/',
+          {
+            method: 'post',
+            body: data,
+          }
         );
-        navigation.navigate('Home');
+        await response.json().then(async (token) => {
+          await AsyncStorage.setItem(
+            'token',
+            token.token
+          );
+          AsyncStorage.getItem('token').then((value) => {
+            if (value != null) {
+              console.log()
+            }
+          });
 
-      })
-    } catch (error) {
-      console.error(error);
+          navigation.navigate('Home');
+
+        })
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
-  useEffect(() => {
-    const value = AsyncStorage.getItem('token');
-    if (value != null) {
-      navigation.navigate('Home');
-    }
-  }, []);
+
+
+  InteractionManager.runAfterInteractions(() => {
+    AsyncStorage.getItem('token').then((value) => {
+      if (value != null) {
+        console.log(value);
+        navigation.navigate('Home');
+      }
+    });
+  })
+
 
 
   return (
@@ -158,8 +163,8 @@ function SignIn() {
                   marginBottom={sizes.m}
                   label="Username"
                   placeholder="Enter your Username"
-                  success={Boolean(registration.username && isValid.username)}
-                  danger={Boolean(registration.username && !isValid.username)}
+                  success={Boolean(registration.username)}
+                  danger={Boolean(registration.username)}
                   onChangeText={(value) => handleChange({ name: value })}
                 />
                 <Input
@@ -169,8 +174,8 @@ function SignIn() {
                   label="Password"
                   placeholder="Enter your Password"
                   onChangeText={(value) => handleChange({ password: value })}
-                  success={Boolean(registration.password && isValid.password)}
-                  danger={Boolean(registration.password && !isValid.password)}
+                  success={Boolean(registration.password.length >= 8)}
+                  danger={registration.password.length < 8 && registration.password.length > 0}
                 />
               </Block>
               <Button

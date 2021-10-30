@@ -1,57 +1,74 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Linking, Platform} from 'react-native';
-import {useNavigation} from '@react-navigation/core';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Linking, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
-import {useData, useTheme, useTranslation} from '../hooks/';
+import { useData, useTheme, useTranslation } from '../hooks/';
 import * as regex from '../constants/regex';
-import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
+import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
+import ImagePicker, { ImageLibraryOptions } from 'react-native-image-picker';
+import { handleRegister } from '../../services/userServices';
 
 const isAndroid = Platform.OS === 'android';
-
 interface IRegistration {
-  name: string;
-  email: string;
-  password: string;
-  agreed: boolean;
+  username: string,
+  firstName: string,
+  lastName: string,
+  password: string,
+  bio: string,
+  profilePicture: string
 }
 interface IRegistrationValidation {
-  name: boolean;
-  email: boolean;
-  password: boolean;
-  agreed: boolean;
+  username: boolean,
+  firstName: boolean,
+  lastName: boolean,
+  password: boolean,
+  bio: boolean,
+  profilePicture: boolean
 }
 
 const Register = () => {
-  const {isDark} = useData();
-  const {t} = useTranslation();
+
+  const { isDark } = useData();
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    name: false,
-    email: false,
+    username: false,
+    firstName: false,
+    lastName: false,
     password: false,
-    agreed: false,
+    bio: false,
+    profilePicture: false
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    name: '',
-    email: '',
+    username: '',
+    firstName: '',
+    lastName: '',
     password: '',
-    agreed: false,
+    bio: '',
+    profilePicture: ''
   });
-  const {assets, colors, gradients, sizes} = useTheme();
+  const { assets, colors, gradients, sizes } = useTheme();
 
   const handleChange = useCallback(
     (value) => {
-      setRegistration((state) => ({...state, ...value}));
+      setRegistration((state) => ({ ...state, ...value }));
     },
     [setRegistration],
   );
 
-  const handleSignUp = useCallback(() => {
-    if (!Object.values(isValid).includes(false)) {
-      /** send/save registratin data */
-      console.log('handleSignUp', registration);
-    }
-  }, [isValid, registration]);
+  const handleSignUp = () => {
+    handleRegister(registration.username, registration.firstName, registration.lastName, registration.password, registration.bio, registration.profilePicture);
+  }
+
+  const handleChoosePhoto = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      quality: 0.5
+    };
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log(response);
+    });
+  };
 
   useEffect(() => {
     setIsValid((state) => ({
@@ -66,7 +83,7 @@ const Register = () => {
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
-        <Block flex={0} style={{zIndex: 0}}>
+        <Block flex={0} style={{ zIndex: 0 }}>
           <Image
             background
             resizeMode="cover"
@@ -85,7 +102,7 @@ const Register = () => {
                 height={18}
                 color={colors.white}
                 source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
+                transform={[{ rotate: '180deg' }]}
               />
               <Text p white marginLeft={sizes.s}>
                 {t('common.goBack')}
@@ -117,83 +134,37 @@ const Register = () => {
               justify="space-evenly"
               tint={colors.blurTint}
               paddingVertical={sizes.sm}>
-              <Text p semibold center>
-                {t('register.subtitle')}
-              </Text>
-              {/* social buttons */}
-              <Block row center justify="space-evenly" marginVertical={sizes.m}>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.facebook}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.apple}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.google}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-              </Block>
-              <Block
-                row
-                flex={0}
-                align="center"
-                justify="center"
-                marginBottom={sizes.sm}
-                paddingHorizontal={sizes.xxl}>
-                <Block
-                  flex={0}
-                  height={1}
-                  width="50%"
-                  end={[1, 0]}
-                  start={[0, 1]}
-                  gradient={gradients.divider}
-                />
-                <Text center marginHorizontal={sizes.s}>
-                  {t('common.or')}
-                </Text>
-                <Block
-                  flex={0}
-                  height={1}
-                  width="50%"
-                  end={[0, 1]}
-                  start={[1, 0]}
-                  gradient={gradients.divider}
-                />
-              </Block>
+
               {/* form inputs */}
               <Block paddingHorizontal={sizes.sm}>
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t('common.name')}
+                  label="Username"
                   placeholder={t('common.namePlaceholder')}
                   success={Boolean(registration.name && isValid.name)}
                   danger={Boolean(registration.name && !isValid.name)}
-                  onChangeText={(value) => handleChange({name: value})}
+                  onChangeText={(value) => handleChange({ name: value })}
                 />
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t('common.email')}
+                  label='First Name'
                   keyboardType="email-address"
                   placeholder={t('common.emailPlaceholder')}
                   success={Boolean(registration.email && isValid.email)}
                   danger={Boolean(registration.email && !isValid.email)}
-                  onChangeText={(value) => handleChange({email: value})}
+                  onChangeText={(value) => handleChange({ email: value })}
+                />
+                <Input
+                  autoCapitalize="none"
+                  marginBottom={sizes.m}
+                  label="Last Name"
+                  keyboardType="email-address"
+                  placeholder={t('common.emailPlaceholder')}
+                  success={Boolean(registration.email && isValid.email)}
+                  danger={Boolean(registration.email && !isValid.email)}
+                  onChangeText={(value) => handleChange({ email: value })}
                 />
                 <Input
                   secureTextEntry
@@ -201,17 +172,39 @@ const Register = () => {
                   marginBottom={sizes.m}
                   label={t('common.password')}
                   placeholder={t('common.passwordPlaceholder')}
-                  onChangeText={(value) => handleChange({password: value})}
+                  onChangeText={(value) => handleChange({ password: value })}
+                  success={Boolean(registration.password && isValid.password)}
+                  danger={Boolean(registration.password && !isValid.password)}
+                />
+                <Input
+                  secureTextEntry
+                  autoCapitalize="none"
+                  marginBottom={sizes.m}
+                  multiline
+                  label="Bio"
+                  placeholder={t('common.passwordPlaceholder')}
+                  onChangeText={(value) => handleChange({ password: value })}
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
                 />
               </Block>
+              <Button
+                primary
+                outlined
+                shadow={!isAndroid}
+                marginVertical={sizes.s}
+                marginHorizontal={sizes.sm}
+                onPress={() => (handleChoosePhoto())}>
+                <Text bold primary transform="uppercase">
+                  {t('common.signin')}
+                </Text>
+              </Button>
               {/* checkbox terms */}
               <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
                 <Checkbox
                   marginRight={sizes.sm}
                   checked={registration?.agreed}
-                  onPress={(value) => handleChange({agreed: value})}
+                  onPress={(value) => handleChange({ agreed: value })}
                 />
                 <Text paddingRight={sizes.s}>
                   {t('common.agree')}
@@ -234,17 +227,7 @@ const Register = () => {
                   {t('common.signup')}
                 </Text>
               </Button>
-              <Button
-                primary
-                outlined
-                shadow={!isAndroid}
-                marginVertical={sizes.s}
-                marginHorizontal={sizes.sm}
-                onPress={() => navigation.navigate('Pro')}>
-                <Text bold primary transform="uppercase">
-                  {t('common.signin')}
-                </Text>
-              </Button>
+
             </Block>
           </Block>
         </Block>

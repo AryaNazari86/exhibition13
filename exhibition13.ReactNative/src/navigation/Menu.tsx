@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, Animated, Linking, StyleSheet } from 'react-native';
-
+import { Alert, Animated, Linking, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useIsDrawerOpen,
   createDrawerNavigator,
@@ -88,9 +88,8 @@ const DrawerContent = (
     { name: t('screens.home'), to: 'Home', icon: assets.home },
     { name: t('screens.components'), to: 'Components', icon: assets.components },
     { name: t('screens.articles'), to: 'Articles', icon: assets.document },
-    { name: 'Comment', to: 'Comment', icon: assets.tesla },
+    { name: 'Comment', to: 'Comment', icon: assets.payment },
     { name: t('screens.profile'), to: 'Profile', icon: assets.profile },
-    { name: t('screens.register'), to: 'Register', icon: assets.register },
   ];
 
   return (
@@ -153,6 +152,33 @@ const DrawerContent = (
           );
         })}
 
+        <Button
+          row
+          justify="flex-start"
+          marginBottom={sizes.s}
+          onPress={() => { AsyncStorage.removeItem('token', (error) => console.log('error')); navigation.navigate('SignIn') }}>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={14}
+              height={14}
+              color={colors.black}
+              source={assets.close}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            Logout
+          </Text>
+        </Button>
+
         <Block
           flex={0}
           height={1}
@@ -164,6 +190,8 @@ const DrawerContent = (
         <Text semibold transform="uppercase" opacity={0.5}>
           {t('menu.documentation')}
         </Text>
+
+
 
         <Button
           row
@@ -205,8 +233,9 @@ const DrawerContent = (
             }}
           />
         </Block>
+
       </Block>
-    </DrawerContentScrollView>
+    </DrawerContentScrollView >
   );
 };
 

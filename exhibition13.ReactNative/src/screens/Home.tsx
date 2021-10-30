@@ -22,11 +22,7 @@ const Home = () => {
     }
   }
   const [articles, setArticles] = useState(important);
-  useEffect(() => {
-    getArticles();
-    setArticles(important);
-    handleTabs(0);
-  }, []);
+
   const { t } = useTranslation();
   const [tab, setTab] = useState<number>(0);
   const { following, trending } = useData();
@@ -43,6 +39,11 @@ const Home = () => {
   );
 
 
+  useEffect(() => {
+    getArticles();
+    setArticles(important);
+    handleTabs(0);
+  }, []);
 
   return (
     <Block>

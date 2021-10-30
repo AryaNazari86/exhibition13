@@ -27,16 +27,14 @@ class UserManager(BaseUserManager):
         return user
 
 
-
-
 class User(AbstractBaseUser):
     username = models.CharField(unique=True, max_length=100)
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
-    profile_picture = models.ImageField(upload_to='images/accounts/', default='images/default_account.png', blank=True)
+    profile_picture = models.ImageField(
+        upload_to='images/accounts/', default='images/default_account.png', blank=True)
     bio = models.TextField(null=True)
-    participated_class = models.CharField(max_length=50)
-    
+    participated_class = models.CharField(max_length=50, blank=True, null=True)
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
