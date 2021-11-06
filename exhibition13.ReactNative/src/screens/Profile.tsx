@@ -22,8 +22,11 @@ const Profile = () => {
 
 
   const [user, setUser] = useState({
-    'name': 'Hi',
-    'username': 'HIii'
+    'name': 'ERROR',
+    'username': 'ERROR',
+    'bio': 'ERROR',
+    'participated_class': 'ERROR',
+    'avatar': 'ERROr'
   });
   const getProfileData = async () => {
     try {
@@ -44,11 +47,11 @@ const Profile = () => {
     }
   };
   const handleSocialLink = useCallback(
-    (type: 'twitter' | 'dribbble') => {
+    (type: 'aparat' | 'bale') => {
       const url =
-        type === 'twitter'
-          ? `https://twitter.com/${user?.social?.twitter}`
-          : `https://dribbble.com/${user?.social?.dribbble}`;
+        type === 'aparat'
+          ? `https://www.aparat.com/techno1400`
+          : `https://ble.ir/techno1400`;
 
       try {
         Linking.openURL(url);
@@ -125,7 +128,7 @@ const Profile = () => {
                     paddingHorizontal={sizes.m}
                     color="rgba(255,255,255,0.2)">
                     <Text white bold transform="uppercase">
-                      {t('common.follow')}
+                      Techno
                     </Text>
                   </Block>
                 </Button>
@@ -135,10 +138,10 @@ const Profile = () => {
                   marginHorizontal={sizes.sm}
                   color="rgba(255,255,255,0.2)"
                   outlined={String(colors.white)}
-                  onPress={() => handleSocialLink('twitter')}>
+                  onPress={() => handleSocialLink('aparat')}>
                   <Ionicons
                     size={18}
-                    name="logo-twitter"
+                    name="logo-whatsapp"
                     color={colors.white}
                   />
                 </Button>
@@ -147,10 +150,10 @@ const Profile = () => {
                   radius={sizes.m}
                   color="rgba(255,255,255,0.2)"
                   outlined={String(colors.white)}
-                  onPress={() => handleSocialLink('dribbble')}>
+                  onPress={() => handleSocialLink('bale')}>
                   <Ionicons
                     size={18}
-                    name="logo-dribbble"
+                    name="logo-youtube"
                     color={colors.white}
                   />
                 </Button>
@@ -177,18 +180,9 @@ const Profile = () => {
               justify="space-evenly"
               paddingVertical={sizes.sm}
               renderToHardwareTextureAndroid>
-              <Block align="center">
-                <Text h5>{user?.stats?.posts}</Text>
-                <Text>{t('profile.posts')}</Text>
-              </Block>
-              <Block align="center">
-                <Text h5>{(user?.stats?.followers || 0) / 1000}k</Text>
-                <Text>{t('profile.followers')}</Text>
-              </Block>
-              <Block align="center">
-                <Text h5>{(user?.stats?.following || 0) / 1000}k</Text>
-                <Text>{t('profile.following')}</Text>
-              </Block>
+              <Text bold transform="uppercase">
+                {user.participated_class}
+              </Text>
             </Block>
           </Block>
 
@@ -206,18 +200,13 @@ const Profile = () => {
           <Block paddingHorizontal={sizes.sm} marginTop={sizes.s}>
             <Block row align="center" justify="space-between">
               <Text h5 semibold>
-                {t('common.album')}
+                Picrues
               </Text>
-              <Button>
-                <Text p primary semibold>
-                  {t('common.viewall')}
-                </Text>
-              </Button>
             </Block>
             <Block row justify="space-between" wrap="wrap">
               <Image
                 resizeMode="cover"
-                source={assets?.photo1}
+                source={assets.school}
                 style={{
                   width: IMAGE_VERTICAL_SIZE + IMAGE_MARGIN / 2,
                   height: IMAGE_VERTICAL_SIZE * 2 + IMAGE_VERTICAL_MARGIN,
@@ -226,7 +215,7 @@ const Profile = () => {
               <Block marginLeft={sizes.m}>
                 <Image
                   resizeMode="cover"
-                  source={assets?.photo2}
+                  source={assets.sampad}
                   marginBottom={IMAGE_VERTICAL_MARGIN}
                   style={{
                     height: IMAGE_VERTICAL_SIZE,
@@ -235,7 +224,7 @@ const Profile = () => {
                 />
                 <Image
                   resizeMode="cover"
-                  source={assets?.photo3}
+                  source={assets.Sampad}
                   style={{
                     height: IMAGE_VERTICAL_SIZE,
                     width: IMAGE_VERTICAL_SIZE,

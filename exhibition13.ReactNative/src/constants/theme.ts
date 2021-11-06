@@ -32,7 +32,9 @@ export const WEIGHTS: ThemeWeights = {
 };
 
 export const ICONS: ThemeIcons = {
-  sampad: require('../assets/icons/Sampad.png'),
+
+  sampad: require('../assets/icons/sampad.png'),
+  Sampad: require('../assets/icons/Sampad.svg'),
   apple: require('../assets/icons/apple.png'),
   google: require('../assets/icons/google.png'),
   facebook: require('../assets/icons/facebook.png'),
@@ -79,6 +81,7 @@ export const ASSETS: ThemeAssets = {
   OpenSansBold: require('../assets/fonts/OpenSans-Bold.ttf'),
 
   // backgrounds/logo
+  school: require('../assets/images/school.jpg'),
   logo: require('../assets/images/logo.png'),
   header: require('../assets/images/header.png'),
   background: require('../assets/images/background.png'),

@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/core';
 import { useData, useTheme, useTranslation } from '../hooks/';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
-import ImagePicker, { ImageLibraryOptions } from 'react-native-image-picker';
+import * as ImagePicker from "react-native-image-picker";
 import { handleRegister } from '../../services/userServices';
-
+import { ImageLibraryOptions, launchImageLibrary } from 'react-native-image-picker';
 const isAndroid = Platform.OS === 'android';
 interface IRegistration {
   username: string,
@@ -65,7 +65,8 @@ const Register = () => {
       mediaType: 'photo',
       quality: 0.5
     };
-    ImagePicker.launchImageLibrary(options, response => {
+
+    launchImageLibrary(options, response => {
       console.log(response);
     });
   };

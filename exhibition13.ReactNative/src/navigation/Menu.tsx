@@ -86,7 +86,6 @@ const DrawerContent = (
   // screen list for Drawer menu
   const screens = [
     { name: t('screens.home'), to: 'Home', icon: assets.home },
-    { name: t('screens.components'), to: 'Components', icon: assets.components },
     { name: t('screens.articles'), to: 'Articles', icon: assets.document },
     { name: 'Comment', to: 'Comment', icon: assets.payment },
     { name: t('screens.profile'), to: 'Profile', icon: assets.profile },
@@ -105,7 +104,6 @@ const DrawerContent = (
             radius={0}
             width={33}
             height={33}
-            color={colors.text}
             source={ICONS.sampad}
             marginRight={sizes.sm}
           />
@@ -114,13 +112,14 @@ const DrawerContent = (
               Exhibition 13
             </Text>
             <Text size={12} semibold>
-              Allameh Helli 3
+              Techno Group
             </Text>
           </Block>
         </Block>
 
         {screens?.map((screen, index) => {
           const isActive = active === screen.to;
+
           return (
             <Button
               row
@@ -188,11 +187,126 @@ const DrawerContent = (
         />
 
         <Text semibold transform="uppercase" opacity={0.5}>
-          {t('menu.documentation')}
+          Candidates
         </Text>
 
+        <Button
+          row
+          justify="flex-start"
+          marginTop={sizes.sm}
+          marginBottom={sizes.s}
+          onPress={() =>
+            handleWebLink('https://github.com/creativetimofficial')
+          }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={14}
+              height={14}
+              color={colors.black}
+              source={assets.settings}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            Mohammad Hajikandi
+          </Text>
+        </Button>
 
-
+        <Button
+          row
+          justify="flex-start"
+          marginTop={sizes.sm}
+          marginBottom={sizes.s}
+          onPress={() =>
+            handleWebLink('https://github.com/creativetimofficial')
+          }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={14}
+              height={14}
+              color={colors.black}
+              source={assets.office}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            Arya Nazari
+          </Text>
+        </Button>
+        <Button
+          row
+          justify="flex-start"
+          marginTop={sizes.sm}
+          marginBottom={sizes.s}
+          onPress={() =>
+            handleWebLink('https://github.com/creativetimofficial')
+          }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={14}
+              height={14}
+              color={colors.black}
+              source={assets.star}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            Ilia Soleimani
+          </Text>
+        </Button>
+        <Button
+          row
+          justify="flex-start"
+          marginTop={sizes.sm}
+          marginBottom={sizes.s}
+          onPress={() =>
+            handleWebLink('https://github.com/creativetimofficial')
+          }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={14}
+              height={14}
+              color={colors.black}
+              source={assets.users}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            Amirsaleh Dehghan
+          </Text>
+        </Button>
         <Button
           row
           justify="flex-start"
@@ -219,20 +333,11 @@ const DrawerContent = (
             />
           </Block>
           <Text p color={labelColor}>
-            {t('menu.started')}
+            Mani Soori
           </Text>
         </Button>
 
-        <Block row justify="space-between" marginTop={sizes.sm}>
-          <Text color={labelColor}>{t('darkMode')}</Text>
-          <Switch
-            checked={isDark}
-            onPress={(checked) => {
-              handleIsDark(checked);
-              Alert.alert(t('pro.title'), t('pro.alert'));
-            }}
-          />
-        </Block>
+
 
       </Block>
     </DrawerContentScrollView >

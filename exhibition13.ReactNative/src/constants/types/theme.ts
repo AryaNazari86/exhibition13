@@ -207,6 +207,7 @@ export interface ThemeWeights {
   black?: TextStyle['fontWeight'];
 }
 export interface ThemeIcons {
+  Sampad: ImageSourcePropType;
   sampad: ImageSourcePropType;
   apple: ImageSourcePropType;
   google: ImageSourcePropType;
@@ -252,6 +253,7 @@ export interface ThemeAssets {
   OpenSansExtraBold?: any;
   OpenSansBold?: any;
 
+  school: ImageSourcePropType;
   logo: ImageSourcePropType;
   header: ImageSourcePropType;
   background: ImageSourcePropType;

@@ -3,11 +3,14 @@ import { TouchableOpacity } from 'react-native';
 import { useData, useTheme, useTranslation } from '../hooks/';
 import { Block, Button, Image, Input, Product, Text } from '../components/';
 import { ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import { Platform, Linking } from 'react-native';
 const Home = () => {
     const { t } = useTranslation();
     const { assets, colors, fonts, gradients, sizes } = useTheme();
     const [title, setTitle] = useState('');
     const [comment, setComment] = useState('');
+    const navigation = useNavigation();
     const submitComment = (title, comment) => {
         var data = new FormData();
         data.append('title', title);
@@ -45,7 +48,8 @@ const Home = () => {
                         <Button
                             row
                             flex={0}
-                            justify="flex-start">
+                            justify="flex-start"
+                            onPress={() => navigation.goBack()}>
                             <Image
                                 radius={0}
                                 width={10}
@@ -87,23 +91,16 @@ const Home = () => {
                             </Text>
                             {/* social buttons */}
                             <Block row center justify="space-evenly" marginVertical={sizes.m}>
-                                <Button outlined gray >
-                                    <Image
-                                        source={assets.facebook}
-                                        height={sizes.m}
-                                        width={sizes.m}
-                                    />
-                                </Button>
-                                <Button outlined gray >
-                                    <Image
-                                        source={assets.apple}
-                                        height={sizes.m}
-                                        width={sizes.m}
-                                    />
-                                </Button>
-                                <Button outlined gray >
+                                <Button outlined gray onPress={() => Linking.openURL('https://forms.gle/nYW5EP8S35xyQDws9')}>
                                     <Image
                                         source={assets.google}
+                                        height={sizes.m}
+                                        width={sizes.m}
+                                    />
+                                </Button>
+                                <Button outlined gray onPress={() => Linking.openURL('https://survey.porsline.ir/s/iuqfipy/')}>
+                                    <Image
+                                        source={assets.calendar}
                                         height={sizes.m}
                                         width={sizes.m}
                                     />

@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Touchable, TouchableOpacity } from 'react-native';
 import { useData, useTheme, useTranslation } from '../hooks/';
 import { Block, Button, Image, Input, Product, Text } from '../components/';
 import { ActivityIndicator } from 'react-native';
 import { getHomeArticles, getLatestArticles } from '../../services/articleServices';
+import { useNavigation } from '@react-navigation/core';
+
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const [important, setImportant] = useState([]);
   const [latest, setLatest] = useState([]);
-
+  const navigation = useNavigation();
   const getArticles = async () => {
     try {
       const data = await getHomeArticles();
@@ -42,7 +44,8 @@ const Home = () => {
   useEffect(() => {
     getArticles();
     setArticles(important);
-    handleTabs(0);
+    setTab(0);
+    console.log(articles);
   }, []);
 
   return (
@@ -112,48 +115,52 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: sizes.l }}>
         <Block justify="space-between" marginTop={sizes.sm}>
-          {articles.map((article) => (
-            <Block card marginTop={sizes.sm}>
-              <Image
-                resizeMode="cover"
-                source={articleImage}
-                style={{ width: '100%', height: 150, }}
-              />
-              <Text
-                h5
-                bold
-                transform="uppercase"
-                gradient={gradients.primary}
-                marginTop={sizes.sm}>
-                {article.title}
-              </Text>
-              <Text
-                p
-                marginTop={sizes.s}
-                marginLeft={sizes.xs}
-                marginBottom={sizes.sm}>
-                The most beautiful and complex UI Kits built by Creative Tim.
-              </Text>
-              {/* user details */}
-              <Block row marginLeft={sizes.xs} marginBottom={sizes.xs}>
+          {isLoading ? <ActivityIndicator /> : (articles.map((article) => (
+            <TouchableOpacity onPress={() => navigation.navigate('ArticlePreview', { body: article.body, video: article.video, image: article.image, title: article.title })}>
+              <Block card marginTop={sizes.sm}>
                 <Image
-                  source={{ uri: article.user.profile_picture }}
-                  style={{ width: sizes.xl, height: sizes.xl, borderRadius: sizes.s }}
+                  resizeMode="cover"
+                  source={articleImage}
+                  style={{ width: '100%', height: 150, }}
                 />
-                <Block marginLeft={sizes.s}>
-                  <Text p semibold>
-                    {article.user.username}
-                  </Text>
-                  <Text p gray>
-                    {article.user.first_name + ' ' + article.user.last_name}
-                  </Text>
+                <Text
+                  h5
+                  bold
+                  transform="uppercase"
+                  gradient={gradients.primary}
+                  marginTop={sizes.sm}>
+                  {article.title}
+                </Text>
+                <Text
+                  p
+                  marginTop={sizes.s}
+                  marginLeft={sizes.xs}
+                  marginBottom={sizes.sm}>
+                  The most beautiful and complex UI Kits built by Creative Tim.
+                </Text>
+                {/* user details */}
+                <Block row marginLeft={sizes.xs} marginBottom={sizes.xs}>
+                  <Image
+                    source={{ uri: article.user.profile_picture }}
+                    style={{ width: sizes.xl, height: sizes.xl, borderRadius: sizes.s }}
+                  />
+                  <Block marginLeft={sizes.s}>
+                    <Text p semibold>
+                      {article.user.username}
+                    </Text>
+                    <Text p gray>
+                      {article.user.first_name + ' ' + article.user.last_name}
+                    </Text>
+                  </Block>
                 </Block>
               </Block>
-            </Block>
-          ))}
+
+            </TouchableOpacity>
+
+          )))}
         </Block>
       </Block>
-    </Block>
+    </Block >
   );
 };
 
